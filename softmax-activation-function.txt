@@ -1,4 +1,5 @@
 What is a softmax activation function?
+http://www.faqs.org/faqs/ai-faq/neural-nets/part2/section-12.html
 
 If you want the outputs of a network to be interpretable as posterior
 probabilities for a categorical target variable, it is highly desirable for
