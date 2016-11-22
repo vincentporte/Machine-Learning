@@ -1,0 +1,71 @@
+What is a softmax activation function?
+
+If you want the outputs of a network to be interpretable as posterior
+probabilities for a categorical target variable, it is highly desirable for
+those outputs to lie between zero and one and to sum to one. The purpose of
+the softmax activation function is to enforce these constraints on the
+outputs. Let the net input to each output unit be q_i, i=1,...,c,
+where c is the number of categories. Then the softmax output p_i is: 
+
+           exp(q_i)
+   p_i = ------------
+          c
+         sum exp(q_j)
+         j=1
+
+Unless you are using weight decay or Bayesian estimation or some such thing
+that requires the weights to be treated on an equal basis, you can choose
+any one of the output units and leave it completely unconnected--just set
+the net input to 0. Connecting all of the output units will just give you
+redundant weights and will slow down training. To see this, add an arbitrary
+constant z to each net input and you get: 
+
+           exp(q_i+z)       exp(q_i) exp(z)       exp(q_i)    
+   p_i = ------------   = ------------------- = ------------   
+          c                c                     c            
+         sum exp(q_j+z)   sum exp(q_j) exp(z)   sum exp(q_j)  
+         j=1              j=1                   j=1
+
+so nothing changes. Hence you can always pick one of the output units, and
+add an appropriate constant to each net input to produce any desired net
+input for the selected output unit, which you can choose to be zero or
+whatever is convenient. You can use the same trick to make sure that none of
+the exponentials overflows. 
+
+Statisticians usually call softmax a "multiple logistic" function. It
+reduces to the simple logistic function when there are only two categories.
+Suppose you choose to set q_2 to 0. Then 
+
+           exp(q_1)         exp(q_1)              1
+   p_1 = ------------ = ----------------- = -------------
+          c             exp(q_1) + exp(0)   1 + exp(-q_1)
+         sum exp(q_j)
+         j=1
+
+and p_2, of course, is 1-p_1. 
+
+The softmax function derives naturally from log-linear models and leads to
+convenient interpretations of the weights in terms of odds ratios. You
+could, however, use a variety of other nonnegative functions on the real
+line in place of the exp function. Or you could constrain the net inputs to
+the output units to be nonnegative, and just divide by the sum--that's
+called the Bradley-Terry-Luce model. 
+
+The softmax function is also used in the hidden layer of normalized
+radial-basis-function networks; see "How do MLPs compare with RBFs?" 
+
+References: 
+
+   Bridle, J.S. (1990a). Probabilistic Interpretation of Feedforward
+   Classification Network Outputs, with Relationships to Statistical Pattern
+   Recognition. In: F.Fogleman Soulie and J.Herault (eds.), Neurocomputing:
+   Algorithms, Architectures and Applications, Berlin: Springer-Verlag, pp.
+   227-236. 
+
+   Bridle, J.S. (1990b). Training Stochastic Model Recognition Algorithms as
+   Networks can lead to Maximum Mutual Information Estimation of Parameters.
+   In: D.S.Touretzky (ed.), Advances in Neural Information Processing
+   Systems 2, San Mateo: Morgan Kaufmann, pp. 211-217. 
+
+   McCullagh, P. and Nelder, J.A. (1989) Generalized Linear Models, 2nd
+   ed., London: Chapman & Hall. See Chapter 5. 
