@@ -1,0 +1,31 @@
+2017-04-06
+	tensorflow_gpu-1.0.1-cp35-cp35m-win_amd64.whl 
+	cuda_8.0.61_win10
+	cuDNN v6.0 (March 23, 2017), for CUDA 8.0
+
+Installing TensorFlow on Windows
+	https://www.tensorflow.org/install/install_windows
+
+Take the following steps to install TensorFlow in an Anaconda environment:
+	Follow the instructions on the Anaconda download site to download and install Anaconda.
+	Create a conda environment named tensorflow by invoking the following command:
+		C:> conda create -n tensorflowGPU 
+	Activate the conda environment by issuing the following command:
+		C:> activate tensorflowGPU
+ 		(tensorflow)C:>  # Your prompt should change 
+	To install the GPU version of TensorFlow, enter the following command (on a single line):
+		(tensorflow)C:> pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/windows/gpu/tensorflow_gpu-1.0.1-cp35-cp35m-win_amd64.whl 
+
+Validate your TensorFlow installation by doing the following:
+	Start a terminal.
+	If you installed through Anaconda, activate your Anaconda environment.
+	Inside that terminal, invoke python:
+		C:> python 
+	Enter the following short program inside the python interactive shell:
+		>>> import tensorflow as tf
+		hello = tf.constant('Hello, TensorFlow!')
+		sess = tf.Session()
+		print(sess.run(hello))
+ 	If the Python program outputs the following, then the installation is successful and you can begin writing TensorFlow programs. (If you are new to TensorFlow, see Getting Started with TensorFlow.)
+		Hello, TensorFlow!
+	If the system generates an error message instead of a greeting, see the next section.
